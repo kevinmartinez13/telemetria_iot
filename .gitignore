@@ -1,0 +1,14 @@
+# Entorno virtual
+venv/
+.venv/
+env/
+
+# Base de datos local
+db.sqlite3
+
+# Secretos de Firebase (MUY IMPORTANTE)
+firebase-sdk.json
+
+# Archivos temporales de Python
+__pycache__/
+*.py[cod]
