@@ -1,5 +1,6 @@
 from django.db import models
 
+# crear modelo para guardar
 class Telemetria(models.Model):
     id_servidor = models.CharField(max_length=50)
     cpu = models.FloatField()

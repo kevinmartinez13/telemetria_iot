@@ -1,8 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+# mondelo de como se guardan los usuarios, con su rol (sensor o admin)
 class User(AbstractUser):
-    # Definición de roles para cumplimiento de seguridad [cite: 16]
     ROLE_CHOICES = (
         ('sensor', 'Sensor (Máquina)'),
         ('admin', 'Administrador (Humano)'),

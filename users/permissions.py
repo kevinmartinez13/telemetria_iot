@@ -1,7 +1,7 @@
 from rest_framework import permissions
 
 class IsSensorRole(permissions.BasePermission):
-    """Acceso exclusivo para el Rol Sensor (POST de datos) [cite: 19]"""
+    """Acceso exclusivo para el Rol Sensor (POST de datos)"""
     def has_permission(self, request, view):
         return (
             request.user.is_authenticated and 
@@ -9,7 +9,7 @@ class IsSensorRole(permissions.BasePermission):
         )
 
 class IsAdminRole(permissions.BasePermission):
-    """Acceso exclusivo para el Rol Admin (Lectura y Alertas) [cite: 20]"""
+    """Acceso exclusivo para el Rol Admin (Lectura y Alertas)"""
     def has_permission(self, request, view):
         return (
             request.user.is_authenticated and 

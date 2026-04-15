@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Telemetria
 
+# comvertir a json
 class TelemetriaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Telemetria

@@ -1,7 +1,8 @@
 from django.urls import re_path
 from . import consumers
 
+# rutas de WebSocket para alertas en tiempo real
 websocket_urlpatterns = [
-    # Cambia .as_view() por .as_asgi()
+    # R = Raw ws alertas
     re_path(r'ws/alertas/$', consumers.AlertaConsumer.as_asgi()),
 ]

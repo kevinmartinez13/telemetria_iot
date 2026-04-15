@@ -12,9 +12,8 @@ SECRET_KEY = 'django-insecure-tu-clave-aqui'
 DEBUG = True
 ALLOWED_HOSTS = []
 
-# --- APLICACIONES (El orden de daphne es CRÍTICO) ---
 INSTALLED_APPS = [
-    'daphne',      # DEBE ir de primero para habilitar WebSockets en desarrollo
+    'daphne',      # para ser capaz de manejar WebSockets
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

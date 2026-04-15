@@ -95,10 +95,6 @@ class EstadoActualView(APIView):
     def get(self, request):
         try:
             # --- PASO 1: CONSULTA A FIRESTORE ---
-            # Accedemos a la colección 'telemetria'.
-            # CRUCIAL: Usamos .order_by('fecha_registro', direction='DESCENDING')
-            # Esto trae los documentos del más nuevo al más antiguo.
-            # .stream() inicia la descarga de los datos.
             docs = db_firestore.collection('telemetria')\
                 .order_by('fecha_registro', direction='DESCENDING').stream()
 
@@ -114,12 +110,8 @@ class EstadoActualView(APIView):
                 srv_id = item.get('id_servidor')
                 
                 # --- PASO 3: LÓGICA DE FILTRADO (EL CORAZÓN DEL CÓDIGO) ---
-                # Como los datos vienen ordenados del más reciente al más viejo:
-                # La PRIMERA vez que aparece un ID de servidor, ese es su estado actual.
                 if srv_id not in servidores:
-                    # Si el servidor no está en nuestro diccionario, lo agregamos.
-                    # Una vez agregado, la próxima vez que aparezca este srv_id 
-                    # en el bucle, será ignorado (porque ya no entrará en este 'if').
+
                     servidores[srv_id] = {
                         "ultima_actualizacion": item.get('fecha_registro'),
                         "cpu": item.get('cpu'),
@@ -149,8 +141,6 @@ class ReporteHistoricoView(APIView):
     def get(self, request):
         try:
             # --- PASO 1: OBTENCIÓN DE DATOS ---
-            # Traemos todos los documentos de la colección 'telemetria'
-            # .stream() es más eficiente para leer grandes volúmenes de datos
             docs = db_firestore.collection('telemetria').stream()
             
             # --- PASO 2: INICIALIZACIÓN DE VARIABLES (ACUMULADORES) ---
@@ -177,7 +167,6 @@ class ReporteHistoricoView(APIView):
                     max_temp = temp
                 
                 # C. Conteo de incidencias:
-                # Si el registro fue marcado como anomalía en la ingesta, sumamos 1
                 if val.get('es_anomalia'):
                     conteo_anomalias += 1
                 
@@ -186,10 +175,6 @@ class ReporteHistoricoView(APIView):
 
             # --- PASO 4: CÁLCULOS MATEMÁTICOS FINALES ---
             
-            # Cálculo del Promedio de CPU:
-            # Fórmula: Suma de valores / Cantidad de valores
-            # Usamos un 'if' (operador ternario) para evitar el error de "división por cero"
-            # si la base de datos está vacía.
             promedio_cpu = total_cpu / conteo_total if conteo_total > 0 else 0
 
             # --- PASO 5: RESPUESTA ESTRUCTURADA ---
